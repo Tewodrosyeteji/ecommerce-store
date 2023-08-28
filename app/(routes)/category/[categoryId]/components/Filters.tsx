@@ -1,5 +1,7 @@
 "use client";
 
+import Button from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 import { Color, Size } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
@@ -33,7 +35,27 @@ const Filters: React.FC<FilterProps> = ({ data, valueKey, name }) => {
 
     router.push(url);
   };
-  return <div>Filters</div>;
+  return (
+    <div className="mb-8">
+      <h3 className="text-lg font-semibold">{name}</h3>
+      <hr className="my-4" />
+      <div className="flex flex-wrap gap-2">
+        {data.map((filter) => (
+          <div key={filter.id} className="flex items-center">
+            <Button
+              className={cn(
+                `rounded-md p-2 text-gray-800 border border-gray-300 bg-white text-sm`,
+                selectedValue === filter.id && "bg-black text-white"
+              )}
+              onClick={() => onClick(filter.id)}
+            >
+              {filter.name}
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Filters;
